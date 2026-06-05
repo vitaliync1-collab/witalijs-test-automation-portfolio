@@ -20,7 +20,7 @@ export class ShopPage {
     await this.page.getByText('Selenium Cookbook').scrollIntoViewIfNeeded();
   }
 
-    async verifyCookbookDetails() {
+  async verifyCookbookDetails() {
       await expect(this.page.getByText('Selenium Cookbook')).toBeVisible();
       await expect(this.page.getByText('$39.99')).toBeVisible();
     }
