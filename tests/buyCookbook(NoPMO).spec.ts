@@ -5,19 +5,19 @@ test('prosty proces zakupowy w sklepie', async ({ page }) => {
 
   await expect(page.getByText('Quality Island Shop')).toBeVisible();
 
-  await page.getByText('Selenium WebDriver Cookbook').scrollIntoViewIfNeeded();
+  await page.getByText('Selenium Cookbook').scrollIntoViewIfNeeded();
 
-  await expect(page.getByText('Selenium WebDriver Cookbook')).toBeVisible();
+  await expect(page.getByText('Selenium Cookbook')).toBeVisible();
   await expect(page.getByText('$39.99')).toBeVisible();
 
-  await page.getByText('Selenium WebDriver Cookbook');
+  await page.getByText('Selenium Cookbook');
 
- await page.getByTestId('btn-add-to-cart-8').click();
+ await page.getByTestId('btn-add-to-cart-6a0f69aedc3432efc3e8cb0b').click();
 
   await page.getByTestId('btn-shop-cart').click();
 
   await expect(page.getByText('Shopping Cart')).toBeVisible();
-  await expect(page.getByText('Selenium WebDriver Cookbook')).toBeVisible();
+  await expect(page.getByText('Selenium Cookbook')).toBeVisible();
   await expect(page.getByTestId('cart-subtotal')).toHaveText('$39.99');
 
   await page.getByRole('button', { name: 'Proceed to Checkout' }).click();
