@@ -22,10 +22,10 @@ test('prosty proces zakupowy w sklepie - Page Object Model', async ({ page }) =>
 
   const orderConfirmationPage = new OrderConfirmationPage(page);
 
-  shopPage.open();
-  shopPage.verifyShopPageIsVisible();
-  shopPage.scrollToCookbook();
-  shopPage.verifyCookbookDetails();
+  await shopPage.open();
+  await shopPage.verifyShopPageIsVisible();
+  await shopPage.scrollToCookbook();
+  await shopPage.verifyCookbookDetails();
   //shopPage.addSelenium();
   //shopPage.openCart();
 
