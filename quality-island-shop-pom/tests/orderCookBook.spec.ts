@@ -1,15 +1,7 @@
 import { test } from '@playwright/test';
-
-// Importujemy Page Object dla strony sklepu.
 import { ShopPage } from '../pages/ShopPage';
-
-// Importujemy Page Object dla koszyka.
 import { CartPage } from '../pages/CartPage';
-
-// Importujemy Page Object dla checkoutu.
 import { CheckoutPage } from '../pages/CheckoutPage';
-
-// Importujemy Page Object dla strony potwierdzenia zamówienia.
 import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
 
 test('prosty proces zakupowy w sklepie - Page Object Model', async ({ page }) => {
@@ -39,5 +31,7 @@ test('prosty proces zakupowy w sklepie - Page Object Model', async ({ page }) =>
   await checkoutPage.verifyCheckoutFormValues();
   await checkoutPage.selectExpressDelivery();
   await checkoutPage.placeOrder();
+
+  await orderConfirmationPage.expectOrderConfirmationPageIsVisible();
 
 });
