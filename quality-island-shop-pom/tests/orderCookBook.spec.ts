@@ -26,12 +26,18 @@ test('prosty proces zakupowy w sklepie - Page Object Model', async ({ page }) =>
   await shopPage.verifyShopPageIsVisible();
   await shopPage.scrollToCookbook();
   await shopPage.verifyCookbookDetails();
-  //shopPage.addSelenium();
-  //shopPage.openCart();
+  await shopPage.buyCookbook();
+  await shopPage.openCart();
 
- // cartPage.expectCartPageIsVisible();
- // cartPage.expectSeleniumBookInCart();
-  //cartPage.expectSubtotalIsCorrect();
-  //cartPage.proceedToCheckout();
+  await cartPage.expectCartPageIsVisible();
+  await cartPage.expectSeleniumBookInCart();
+  await cartPage.expectSubtotalIsCorrect();
+  await cartPage.proceedToCheckout();
+
+  await checkoutPage.expectCheckoutPageIsVisible();
+  await checkoutPage.fillCheckoutForm();
+  await checkoutPage.verifyCheckoutFormValues();
+  await checkoutPage.selectExpressDelivery();
+  await checkoutPage.placeOrder();
 
 });

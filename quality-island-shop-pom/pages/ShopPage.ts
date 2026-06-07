@@ -24,4 +24,12 @@ export class ShopPage {
       await expect(this.page.getByText('Selenium Cookbook')).toBeVisible();
       await expect(this.page.getByText('$39.99')).toBeVisible();
     }
+
+  async buyCookbook() {
+      await  this.page.getByTestId('btn-add-to-cart-6a0f69aedc3432efc3e8cb0b').click();
+;
+  }
+  async openCart() {
+    await this.page.getByTestId('btn-shop-cart').click();
+  }
 }
