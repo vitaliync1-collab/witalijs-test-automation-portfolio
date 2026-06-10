@@ -26,8 +26,12 @@ export class ShopPage {
     }
 
   async buyCookbook() {
-      await  this.page.getByTestId('btn-add-to-cart-6').click();
-;
+    const seleniumCard = this.page.locator('.section-card').filter({ 
+      hasText: 'Selenium Cookbook'
+    });
+    await seleniumCard.getByRole('button', {
+      name: 'Add to Cart'
+    }).click(); 
   }
   async openCart() {
     await this.page.getByTestId('btn-shop-cart').click();

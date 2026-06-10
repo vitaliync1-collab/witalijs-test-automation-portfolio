@@ -12,7 +12,13 @@ test('prosty proces zakupowy w sklepie', async ({ page }) => {
 
   await page.getByText('Selenium Cookbook');
 
- await page.getByTestId('btn-add-to-cart-6').click();
+  const seleniumCard = page.locator('.section-card').filter({
+  hasText: 'Selenium Cookbook'
+});
+
+  await seleniumCard.getByRole('button', {
+  name: 'Add to Cart'
+}).click();
 
   await page.getByTestId('btn-shop-cart').click();
 
