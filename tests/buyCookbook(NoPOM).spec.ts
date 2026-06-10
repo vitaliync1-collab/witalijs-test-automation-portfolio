@@ -12,7 +12,7 @@ test('prosty proces zakupowy w sklepie', async ({ page }) => {
 
   await page.getByText('Selenium Cookbook');
 
- await page.getByTestId('btn-add-to-cart-6a0f69aedc3432efc3e8cb0b').click();
+ await page.getByTestId('btn-add-to-cart-6').click();
 
   await page.getByTestId('btn-shop-cart').click();
 

@@ -26,7 +26,7 @@ export class ShopPage {
     }
 
   async buyCookbook() {
-      await  this.page.getByTestId('btn-add-to-cart-6a0f69aedc3432efc3e8cb0b').click();
+      await  this.page.getByTestId('btn-add-to-cart-6').click();
 ;
   }
   async openCart() {
