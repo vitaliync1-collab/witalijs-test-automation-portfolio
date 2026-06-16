@@ -36,4 +36,22 @@ export class ShopPage {
   async openCart() {
     await this.page.getByTestId('btn-shop-cart').click();
   }
+
+  async filterByCategoryBooks() {
+  await this.page.getByTestId('filter-category-books').click();
+  }
+
+  async checkFilterAndCounter() {
+  const products = this.page.locator('[data-testid^="product-card-"]');
+  const actualCount = await products.count();
+  const counterText = await this.page.getByTestId('products-count').textContent();
+  const displayedCount = Number(counterText?.match(/\d+/)?.[0]);
+  
+  expect(displayedCount).toBe(actualCount);
+  for (let i = 0; i < actualCount; i++) 
+    {
+    await expect(products.nth(i)).toHaveAttribute('data-category','books');
+    }
+  }
 }
+
