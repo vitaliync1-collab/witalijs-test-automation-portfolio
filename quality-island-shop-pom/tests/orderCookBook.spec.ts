@@ -4,7 +4,7 @@ import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
 
-test('prosty proces zakupowy w sklepie - Page Object Model', async ({ page }) => {
+test('Simple order process - Page Object Model', async ({ page }) => {
 
   const shopPage = new ShopPage(page);
 

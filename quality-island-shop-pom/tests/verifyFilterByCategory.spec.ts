@@ -7,5 +7,5 @@ test('Verify filter products by category', async ({ page }) => {
   await shopPage.verifyShopPageIsVisible();
   await shopPage.filterByCategoryBooks();
   await shopPage.checkFilterAndCounter();
-  // Add assertions here
+  
 });
