@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 
 
-test('modal pojawia się po kliknięciu przycisku', async ({ page }) => {
+test('modal appears after clicking the button', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/interactions');
 
   const openModalButton = page.getByTestId('btn-open-modal');

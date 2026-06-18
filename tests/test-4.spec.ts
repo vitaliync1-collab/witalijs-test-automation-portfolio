@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('uzytkownik moze zaladowac plik qaboard', async ({ page }) => {
+test('user can upload a qaboard file', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/forms');
 
   const fileDropZone = page.getByTestId('file-drop-zone');

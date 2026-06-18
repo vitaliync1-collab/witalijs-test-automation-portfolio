@@ -1,46 +1,46 @@
-import { test, expect } from '@playwright/test'; // Importujemy test i expect z Playwrighta.
+import { test, expect } from '@playwright/test'; // Import test and expect from Playwright.
 
-const baseUrl = 'https://restful-booker.herokuapp.com'; // Zapisujemy bazowy adres API w jednej stałej.
+const baseUrl = 'https://restful-booker.herokuapp.com'; // Store the base API address in one constant.
 
-test.describe('Restful Booker API - pierwsze proste testy pokazowe', () => { // Grupujemy pierwsze, najprostsze testy API.
+test.describe('Restful Booker API - first simple demo tests', () => { // Group the first simplest API tests.
 
-  test('API odpowiada na endpoint /ping', async ({ request }) => { // Tworzymy bardzo prosty test sprawdzający działanie API.
-    const response = await request.get(`${baseUrl}/ping`); // Wysyłamy request GET na endpoint /ping.
+  test('API responds to /ping endpoint', async ({ request }) => { // Create a very simple test that checks the API works.
+    const response = await request.get(`${baseUrl}/ping`); // Send a GET request to /ping endpoint.
 
-    expect(response.status()).toBe(201); // Sprawdzamy, czy odpowiedź ma status 201.
+    expect(response.status()).toBe(201); // Check that the response has status 201.
   });
 
 
 
 
-  test('GET /booking zwraca body jako tablicę', async ({ request }) => { // Tworzymy test sprawdzający format body odpowiedzi.
-    const response = await request.get(`${baseUrl}/booking`); // Wysyłamy request GET na endpoint /booking.
+  test('GET /booking returns the body as an array', async ({ request }) => { // Create a test that checks the response body format.
+    const response = await request.get(`${baseUrl}/booking`); // Send a GET request to /booking endpoint.
 
-    expect(response.status()).toBe(200); // Sprawdzamy, czy odpowiedź ma status 200.
+    expect(response.status()).toBe(200); // Check that the response has status 200.
 
-    const body = await response.json(); // Odczytujemy odpowiedź jako JSON.
+    const body = await response.json(); // Read the response as JSON.
 
-    expect(Array.isArray(body)).toBe(true); // Sprawdzamy, czy body jest tablicą.
+    expect(Array.isArray(body)).toBe(true); // Check that the body is an array.
   });
 
-  test('GET /booking zwraca przynajmniej jedną rezerwację', async ({ request }) => { // Tworzymy test sprawdzający, czy lista rezerwacji nie jest pusta.
-    const response = await request.get(`${baseUrl}/booking`); // Wysyłamy request GET na endpoint /booking.
+  test('GET /booking returns at least one booking', async ({ request }) => { // Create a test to verify the bookings list is not empty.
+    const response = await request.get(`${baseUrl}/booking`); // Send a GET request to /booking endpoint.
 
-    expect(response.status()).toBe(200); // Sprawdzamy, czy odpowiedź ma status 200.
+    expect(response.status()).toBe(200); // Check that the response has status 200.
 
-    const body = await response.json(); // Odczytujemy odpowiedź jako JSON.
+    const body = await response.json(); // Read the response as JSON.
 
-    expect(body.length).toBeGreaterThan(0); // Sprawdzamy, czy tablica ma więcej niż zero elementów.
+    expect(body.length).toBeGreaterThan(0); // Check that the array has more than zero elements.
   });
 
-  test('pierwsza rezerwacja z listy ma pole bookingid', async ({ request }) => { // Tworzymy test sprawdzający strukturę pierwszego elementu listy.
-    const response = await request.get(`${baseUrl}/booking`); // Wysyłamy request GET na endpoint /booking.
+  test('the first booking in the list has the bookingid field', async ({ request }) => { // Create a test that checks the structure of the first item in the list.
+    const response = await request.get(`${baseUrl}/booking`); // Send a GET request to /booking endpoint.
 
-    expect(response.status()).toBe(200); // Sprawdzamy, czy odpowiedź ma status 200.
+    expect(response.status()).toBe(200); // Check that the response has status 200.
 
-    const body = await response.json(); // Odczytujemy odpowiedź jako JSON.
+    const body = await response.json(); // Read the response as JSON.
 
-    expect(body[0]).toHaveProperty('bookingid'); // Sprawdzamy, czy pierwszy element ma pole bookingid.
+    expect(body[0]).toHaveProperty('bookingid'); // Check that the first item has the bookingid field.
   });
 
 
@@ -71,270 +71,270 @@ test.describe('Restful Booker API - pierwsze proste testy pokazowe', () => { // 
 
 
   
-  test('można pobrać szczegóły pierwszej rezerwacji z listy', async ({ request }) => { // Tworzymy test pokazujący zależność między dwoma requestami.
-    const listResponse = await request.get(`${baseUrl}/booking`); // Pobieramy listę rezerwacji.
+  test('can fetch details of the first booking from the list', async ({ request }) => { // Create a test that shows the dependency between two requests.
+    const listResponse = await request.get(`${baseUrl}/booking`); // Fetch the bookings list.
 
-    expect(listResponse.status()).toBe(200); // Sprawdzamy, czy lista została pobrana poprawnie.
+    expect(listResponse.status()).toBe(200); // Check that the list was fetched successfully.
 
-    const bookingList = await listResponse.json(); // Odczytujemy listę rezerwacji jako JSON.
+    const bookingList = await listResponse.json(); // Parse the bookings list as JSON.
 
-    const bookingId = bookingList[0].bookingid; // Pobieramy bookingid pierwszej rezerwacji.
+    const bookingId = bookingList[0].bookingid; // Get the bookingid of the first booking.
 
-    const detailsResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Pobieramy szczegóły rezerwacji po jej ID.
+    const detailsResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Fetch booking details by ID.
 
-    expect(detailsResponse.status()).toBe(200); // Sprawdzamy, czy szczegóły zostały pobrane poprawnie.
+    expect(detailsResponse.status()).toBe(200); // Check that the details were fetched successfully.
 
-    const bookingDetails = await detailsResponse.json(); // Odczytujemy szczegóły rezerwacji jako JSON.
+    const bookingDetails = await detailsResponse.json(); // Parse the booking details as JSON.
 
-    expect(bookingDetails).toHaveProperty('firstname'); // Sprawdzamy, czy szczegóły zawierają pole firstname.
-    expect(bookingDetails).toHaveProperty('lastname'); // Sprawdzamy, czy szczegóły zawierają pole lastname.
+    expect(bookingDetails).toHaveProperty('firstname'); // Check that the details include the firstname field.
+    expect(bookingDetails).toHaveProperty('lastname'); // Check that the details include the lastname field.
   });
 });
 
-test.describe('Restful Booker API - rozwiązania zadań', () => { // Grupujemy właściwe rozwiązania zadań.
+test.describe('Restful Booker API - task solutions', () => { // Group the actual task solutions.
 
-  test('Zadanie 1: Sprawdzenie działania API', async ({ request }) => { // Tworzymy test sprawdzający endpoint /ping.
-    const response = await request.get(`${baseUrl}/ping`); // Wysyłamy request GET na endpoint /ping.
+  test('Task 1: Verify API availability', async ({ request }) => { // Create a test that checks the /ping endpoint.
+    const response = await request.get(`${baseUrl}/ping`); // Send a GET request to /ping endpoint.
 
-    expect(response.status()).toBe(201); // Sprawdzamy, czy status odpowiedzi to 201.
+    expect(response.status()).toBe(201); // Check that the response status is 201.
   });
 
-  test('Zadanie 2: Pobranie listy rezerwacji', async ({ request }) => { // Tworzymy test pobierający listę rezerwacji.
-    const response = await request.get(`${baseUrl}/booking`); // Wysyłamy request GET na endpoint /booking.
+  test('Task 2: Retrieve booking list', async ({ request }) => { // Create a test that retrieves the bookings list.
+    const response = await request.get(`${baseUrl}/booking`); // Send a GET request to /booking endpoint.
 
-    expect(response.status()).toBe(200); // Sprawdzamy, czy odpowiedź ma status 200.
+    expect(response.status()).toBe(200); // Check that the response has status 200.
 
-    const body = await response.json(); // Odczytujemy body odpowiedzi jako JSON.
+    const body = await response.json(); // Parse the response body as JSON.
 
-    expect(Array.isArray(body)).toBe(true); // Sprawdzamy, czy odpowiedź jest tablicą.
-    expect(body.length).toBeGreaterThan(0); // Sprawdzamy, czy tablica nie jest pusta.
-    expect(body[0]).toHaveProperty('bookingid'); // Sprawdzamy, czy pierwszy element tablicy ma pole bookingid.
+    expect(Array.isArray(body)).toBe(true); // Check that the response is an array.
+    expect(body.length).toBeGreaterThan(0); // Check that the array is not empty.
+    expect(body[0]).toHaveProperty('bookingid'); // Check that the first array item has the bookingid field.
   });
 
-  test('Zadanie 3: Pobranie szczegółów rezerwacji', async ({ request }) => { // Tworzymy test pobierający szczegóły jednej rezerwacji.
-    const bookingListResponse = await request.get(`${baseUrl}/booking`); // Pobieramy listę rezerwacji.
+  test('Task 3: Retrieve booking details', async ({ request }) => { // Create a test that retrieves details of a single booking.
+    const bookingListResponse = await request.get(`${baseUrl}/booking`); // Fetch the bookings list.
 
-    expect(bookingListResponse.status()).toBe(200); // Sprawdzamy, czy lista rezerwacji została pobrana poprawnie.
+    expect(bookingListResponse.status()).toBe(200); // Check that the bookings list was fetched successfully.
 
-    const bookingList = await bookingListResponse.json(); // Odczytujemy listę rezerwacji jako JSON.
+    const bookingList = await bookingListResponse.json(); // Parse the bookings list as JSON.
 
-    const bookingId = bookingList[0].bookingid; // Pobieramy bookingid pierwszej rezerwacji z listy.
+    const bookingId = bookingList[0].bookingid; // Get the bookingid of the first booking from the list.
 
-    const bookingDetailsResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Pobieramy szczegóły konkretnej rezerwacji.
+    const bookingDetailsResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Fetch details of the selected booking.
 
-    expect(bookingDetailsResponse.status()).toBe(200); // Sprawdzamy, czy szczegóły zostały pobrane poprawnie.
+    expect(bookingDetailsResponse.status()).toBe(200); // Check that the details were fetched successfully.
 
-    const bookingDetails = await bookingDetailsResponse.json(); // Odczytujemy szczegóły rezerwacji jako JSON.
+    const bookingDetails = await bookingDetailsResponse.json(); // Parse the booking details as JSON.
 
-    expect(bookingDetails).toHaveProperty('firstname'); // Sprawdzamy, czy odpowiedź zawiera pole firstname.
-    expect(bookingDetails).toHaveProperty('lastname'); // Sprawdzamy, czy odpowiedź zawiera pole lastname.
-    expect(bookingDetails).toHaveProperty('totalprice'); // Sprawdzamy, czy odpowiedź zawiera pole totalprice.
-    expect(bookingDetails).toHaveProperty('depositpaid'); // Sprawdzamy, czy odpowiedź zawiera pole depositpaid.
-    expect(bookingDetails).toHaveProperty('bookingdates'); // Sprawdzamy, czy odpowiedź zawiera pole bookingdates.
+    expect(bookingDetails).toHaveProperty('firstname'); // Check that the response includes the firstname field.
+    expect(bookingDetails).toHaveProperty('lastname'); // Check that the response includes the lastname field.
+    expect(bookingDetails).toHaveProperty('totalprice'); // Check that the response includes the totalprice field.
+    expect(bookingDetails).toHaveProperty('depositpaid'); // Check that the response includes the depositpaid field.
+    expect(bookingDetails).toHaveProperty('bookingdates'); // Check that the response includes the bookingdates field.
   });
 
-  test('Zadanie 4: Utworzenie nowej rezerwacji', async ({ request }) => { // Tworzymy test tworzący nową rezerwację.
-    const newBooking = { // Przygotowujemy dane nowej rezerwacji.
-      firstname: 'Jan', // Ustawiamy imię klienta.
-      lastname: 'Kowalski', // Ustawiamy nazwisko klienta.
-      totalprice: 499, // Ustawiamy cenę rezerwacji.
-      depositpaid: true, // Ustawiamy informację, że zaliczka została opłacona.
-      bookingdates: { // Tworzymy obiekt z datami rezerwacji.
-        checkin: '2026-06-01', // Ustawiamy datę zameldowania.
-        checkout: '2026-06-07', // Ustawiamy datę wymeldowania.
+  test('Task 4: Create a new booking', async ({ request }) => { // Create a test that creates a new booking.
+    const newBooking = { // Prepare data for a new booking.
+      firstname: 'Jan', // Set the customer first name.
+      lastname: 'Kowalski', // Set the customer last name.
+      totalprice: 499, // Set the booking price.
+      depositpaid: true, // Set the deposit paid information.
+      bookingdates: { // Create the booking dates object.
+        checkin: '2026-06-01', // Set the check-in date.
+        checkout: '2026-06-07', // Set the check-out date.
       },
-      additionalneeds: 'Breakfast', // Ustawiamy dodatkową potrzebę klienta.
+      additionalneeds: 'Breakfast', // Set the additional customer need.
     };
 
-    const response = await request.post(`${baseUrl}/booking`, { // Wysyłamy request POST tworzący nową rezerwację.
-      data: newBooking, // Przekazujemy dane rezerwacji jako body requestu.
+    const response = await request.post(`${baseUrl}/booking`, { // Send a POST request to create a new booking.
+      data: newBooking, // Pass the booking data as the request body.
     });
 
-    expect(response.status()).toBe(200); // Sprawdzamy, czy rezerwacja została utworzona poprawnie.
+    expect(response.status()).toBe(200); // Check that the booking was created successfully.
 
-    const body = await response.json(); // Odczytujemy odpowiedź jako JSON.
+    const body = await response.json(); // Read the response as JSON.
 
-    expect(body).toHaveProperty('bookingid'); // Sprawdzamy, czy odpowiedź zawiera bookingid.
-    expect(body.booking.firstname).toBe(newBooking.firstname); // Sprawdzamy, czy imię w odpowiedzi jest poprawne.
-    expect(body.booking.lastname).toBe(newBooking.lastname); // Sprawdzamy, czy nazwisko w odpowiedzi jest poprawne.
-    expect(body.booking.totalprice).toBe(newBooking.totalprice); // Sprawdzamy, czy cena w odpowiedzi jest poprawna.
-    expect(body.booking.depositpaid).toBe(newBooking.depositpaid); // Sprawdzamy, czy informacja o zaliczce jest poprawna.
-    expect(body.booking.bookingdates.checkin).toBe(newBooking.bookingdates.checkin); // Sprawdzamy datę zameldowania.
-    expect(body.booking.bookingdates.checkout).toBe(newBooking.bookingdates.checkout); // Sprawdzamy datę wymeldowania.
-    expect(body.booking.additionalneeds).toBe(newBooking.additionalneeds); // Sprawdzamy dodatkową potrzebę klienta.
+    expect(body).toHaveProperty('bookingid'); // Check that the response includes bookingid.
+    expect(body.booking.firstname).toBe(newBooking.firstname); // Check that the firstname in the response is correct.
+    expect(body.booking.lastname).toBe(newBooking.lastname); // Check that the lastname in the response is correct.
+    expect(body.booking.totalprice).toBe(newBooking.totalprice); // Check that the totalprice in the response is correct.
+    expect(body.booking.depositpaid).toBe(newBooking.depositpaid); // Check that the deposit information in the response is correct.
+    expect(body.booking.bookingdates.checkin).toBe(newBooking.bookingdates.checkin); // Check the check-in date.
+    expect(body.booking.bookingdates.checkout).toBe(newBooking.bookingdates.checkout); // Check the check-out date.
+    expect(body.booking.additionalneeds).toBe(newBooking.additionalneeds); // Check the additional need in the response.
   });
 
-  test('Zadanie 5: Utworzenie tokena', async ({ request }) => { // Tworzymy test pobierający token autoryzacyjny.
-    const response = await request.post(`${baseUrl}/auth`, { // Wysyłamy request POST na endpoint /auth.
-      data: { // Przekazujemy dane logowania w body requestu.
-        username: 'admin', // Ustawiamy login użytkownika.
-        password: 'password123', // Ustawiamy hasło użytkownika.
+  test('Task 5: Create an auth token', async ({ request }) => { // Create a test that retrieves an auth token.
+    const response = await request.post(`${baseUrl}/auth`, { // Send a POST request to /auth endpoint.
+      data: { // Pass login credentials in the request body.
+        username: 'admin', // Set the user login.
+        password: 'password123', // Set the user password.
       },
     });
 
-    expect(response.status()).toBe(200); // Sprawdzamy, czy token został utworzony poprawnie.
+    expect(response.status()).toBe(200); // Check that the token was created successfully.
 
-    const body = await response.json(); // Odczytujemy odpowiedź jako JSON.
+    const body = await response.json(); // Read the response as JSON.
 
-    expect(body).toHaveProperty('token'); // Sprawdzamy, czy odpowiedź zawiera pole token.
-    expect(typeof body.token).toBe('string'); // Sprawdzamy, czy token jest tekstem.
-    expect(body.token.length).toBeGreaterThan(0); // Sprawdzamy, czy token nie jest pusty.
+    expect(body).toHaveProperty('token'); // Check that the response includes the token field.
+    expect(typeof body.token).toBe('string'); // Check that the token is a string.
+    expect(body.token.length).toBeGreaterThan(0); // Check that the token is not empty.
   });
 
-  test('Zadanie 6: Utworzenie i pobranie rezerwacji', async ({ request }) => { // Tworzymy test tworzący i pobierający rezerwację.
-    const newBooking = { // Przygotowujemy dane nowej rezerwacji.
-      firstname: 'Anna', // Ustawiamy imię klienta.
-      lastname: 'Nowak', // Ustawiamy nazwisko klienta.
-      totalprice: 350, // Ustawiamy cenę rezerwacji.
-      depositpaid: false, // Ustawiamy informację, że zaliczka nie została opłacona.
-      bookingdates: { // Tworzymy obiekt z datami rezerwacji.
-        checkin: '2026-07-10', // Ustawiamy datę zameldowania.
-        checkout: '2026-07-15', // Ustawiamy datę wymeldowania.
+  test('Task 6: Create and retrieve a booking', async ({ request }) => { // Create a test that creates and retrieves a booking.
+    const newBooking = { // Prepare data for a new booking.
+      firstname: 'Anna', // Set the customer first name.
+      lastname: 'Nowak', // Set the customer last name.
+      totalprice: 350, // Set the booking price.
+      depositpaid: false, // Set the deposit paid information to false.
+      bookingdates: { // Create the booking dates object.
+        checkin: '2026-07-10', // Set the check-in date.
+        checkout: '2026-07-15', // Set the check-out date.
       },
-      additionalneeds: 'Lunch', // Ustawiamy dodatkową potrzebę klienta.
+      additionalneeds: 'Lunch', // Set the additional customer need.
     };
 
-    const createResponse = await request.post(`${baseUrl}/booking`, { // Wysyłamy request POST tworzący nową rezerwację.
-      data: newBooking, // Przekazujemy dane rezerwacji jako body requestu.
+    const createResponse = await request.post(`${baseUrl}/booking`, { // Send a POST request to create a new booking.
+      data: newBooking, // Pass the booking data as the request body.
     });
 
-    expect(createResponse.status()).toBe(200); // Sprawdzamy, czy rezerwacja została utworzona poprawnie.
+    expect(createResponse.status()).toBe(200); // Check that the booking was created successfully.
 
-    const createBody = await createResponse.json(); // Odczytujemy odpowiedź po utworzeniu rezerwacji jako JSON.
+    const createBody = await createResponse.json(); // Parse the create booking response as JSON.
 
-    const bookingId = createBody.bookingid; // Zapisujemy ID nowo utworzonej rezerwacji.
+    const bookingId = createBody.bookingid; // Store the ID of the newly created booking.
 
-    expect(bookingId).toBeTruthy(); // Sprawdzamy, czy bookingId istnieje.
+    expect(bookingId).toBeTruthy(); // Check that bookingId exists.
 
-    const getResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Pobieramy utworzoną rezerwację po ID.
+    const getResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Fetch the created booking by ID.
 
-    expect(getResponse.status()).toBe(200); // Sprawdzamy, czy pobranie rezerwacji zakończyło się sukcesem.
+    expect(getResponse.status()).toBe(200); // Check that fetching the booking succeeded.
 
-    const booking = await getResponse.json(); // Odczytujemy pobraną rezerwację jako JSON.
+    const booking = await getResponse.json(); // Parse the fetched booking as JSON.
 
-    expect(booking.firstname).toBe(newBooking.firstname); // Sprawdzamy, czy imię jest poprawne.
-    expect(booking.lastname).toBe(newBooking.lastname); // Sprawdzamy, czy nazwisko jest poprawne.
-    expect(booking.totalprice).toBe(newBooking.totalprice); // Sprawdzamy, czy cena jest poprawna.
-    expect(booking.depositpaid).toBe(newBooking.depositpaid); // Sprawdzamy, czy informacja o zaliczce jest poprawna.
-    expect(booking.bookingdates.checkin).toBe(newBooking.bookingdates.checkin); // Sprawdzamy datę zameldowania.
-    expect(booking.bookingdates.checkout).toBe(newBooking.bookingdates.checkout); // Sprawdzamy datę wymeldowania.
-    expect(booking.additionalneeds).toBe(newBooking.additionalneeds); // Sprawdzamy dodatkową potrzebę klienta.
+    expect(booking.firstname).toBe(newBooking.firstname); // Check that the firstname is correct.
+    expect(booking.lastname).toBe(newBooking.lastname); // Check that the lastname is correct.
+    expect(booking.totalprice).toBe(newBooking.totalprice); // Check that the totalprice is correct.
+    expect(booking.depositpaid).toBe(newBooking.depositpaid); // Check that the deposit information is correct.
+    expect(booking.bookingdates.checkin).toBe(newBooking.bookingdates.checkin); // Check the check-in date.
+    expect(booking.bookingdates.checkout).toBe(newBooking.bookingdates.checkout); // Check the check-out date.
+    expect(booking.additionalneeds).toBe(newBooking.additionalneeds); // Check the additional need.
   });
 
-  test('Zadanie 7: Aktualizacja rezerwacji', async ({ request }) => { // Tworzymy test aktualizujący rezerwację.
-    const authResponse = await request.post(`${baseUrl}/auth`, { // Wysyłamy request POST po token autoryzacyjny.
-      data: { // Przekazujemy dane logowania.
-        username: 'admin', // Ustawiamy login użytkownika.
-        password: 'password123', // Ustawiamy hasło użytkownika.
+  test('Task 7: Update a booking', async ({ request }) => { // Create a test that updates a booking.
+    const authResponse = await request.post(`${baseUrl}/auth`, { // Send a POST request to get an auth token.
+      data: { // Pass login credentials.
+        username: 'admin', // Set the user login.
+        password: 'password123', // Set the user password.
       },
     });
 
-    expect(authResponse.status()).toBe(200); // Sprawdzamy, czy token został utworzony poprawnie.
+    expect(authResponse.status()).toBe(200); // Check that the token was created successfully.
 
-    const authBody = await authResponse.json(); // Odczytujemy odpowiedź z tokenem jako JSON.
+    const authBody = await authResponse.json(); // Parse the token response as JSON.
 
-    const token = authBody.token; // Zapisujemy token do zmiennej.
+    const token = authBody.token; // Store the token in a variable.
 
-    const newBooking = { // Przygotowujemy dane początkowej rezerwacji.
-      firstname: 'Piotr', // Ustawiamy imię klienta.
-      lastname: 'Testowy', // Ustawiamy nazwisko klienta.
-      totalprice: 600, // Ustawiamy początkową cenę.
-      depositpaid: true, // Ustawiamy informację, że zaliczka została opłacona.
-      bookingdates: { // Tworzymy obiekt z początkowymi datami.
-        checkin: '2026-08-01', // Ustawiamy początkową datę zameldowania.
-        checkout: '2026-08-05', // Ustawiamy początkową datę wymeldowania.
+    const newBooking = { // Prepare data for the initial booking.
+      firstname: 'Piotr', // Set the customer first name.
+      lastname: 'Testowy', // Set the customer last name.
+      totalprice: 600, // Set the initial price.
+      depositpaid: true, // Set the deposit paid information.
+      bookingdates: { // Create the initial booking dates object.
+        checkin: '2026-08-01', // Set the initial check-in date.
+        checkout: '2026-08-05', // Set the initial check-out date.
       },
-      additionalneeds: 'Breakfast', // Ustawiamy początkową dodatkową potrzebę.
+      additionalneeds: 'Breakfast', // Set the initial additional need.
     };
 
-    const createResponse = await request.post(`${baseUrl}/booking`, { // Tworzymy rezerwację, którą zaraz zaktualizujemy.
-      data: newBooking, // Przekazujemy dane początkowej rezerwacji.
+    const createResponse = await request.post(`${baseUrl}/booking`, { // Create a booking that we will update shortly.
+      data: newBooking, // Pass the initial booking data.
     });
 
-    expect(createResponse.status()).toBe(200); // Sprawdzamy, czy rezerwacja została utworzona poprawnie.
+    expect(createResponse.status()).toBe(200); // Check that the booking was created successfully.
 
-    const createBody = await createResponse.json(); // Odczytujemy odpowiedź po utworzeniu rezerwacji.
+    const createBody = await createResponse.json(); // Parse the create booking response.
 
-    const bookingId = createBody.bookingid; // Zapisujemy ID utworzonej rezerwacji.
+    const bookingId = createBody.bookingid; // Store the ID of the created booking.
 
-    const updatedBookingData = { // Przygotowujemy nowe dane rezerwacji.
-      firstname: 'Piotr', // Ustawiamy imię klienta.
-      lastname: 'Zaktualizowany', // Ustawiamy nowe nazwisko klienta.
-      totalprice: 750, // Ustawiamy nową cenę.
-      depositpaid: false, // Ustawiamy nową informację o zaliczce.
-      bookingdates: { // Tworzymy obiekt z nowymi datami.
-        checkin: '2026-08-02', // Ustawiamy nową datę zameldowania.
-        checkout: '2026-08-06', // Ustawiamy nową datę wymeldowania.
+    const updatedBookingData = { // Prepare updated booking data.
+      firstname: 'Piotr', // Set the customer first name.
+      lastname: 'Zaktualizowany', // Set the updated customer last name.
+      totalprice: 750, // Set the new price.
+      depositpaid: false, // Set the new deposit information.
+      bookingdates: { // Create the updated booking dates object.
+        checkin: '2026-08-02', // Set the new check-in date.
+        checkout: '2026-08-06', // Set the new check-out date.
       },
-      additionalneeds: 'Dinner', // Ustawiamy nową dodatkową potrzebę.
+      additionalneeds: 'Dinner', // Set the new additional need.
     };
 
-    const updateResponse = await request.put(`${baseUrl}/booking/${bookingId}`, { // Wysyłamy request PUT aktualizujący rezerwację.
-      headers: { // Przekazujemy nagłówki requestu.
-        Cookie: `token=${token}`, // Przekazujemy token w nagłówku Cookie.
+    const updateResponse = await request.put(`${baseUrl}/booking/${bookingId}`, { // Send a PUT request updating the booking.
+      headers: { // Pass the request headers.
+        Cookie: `token=${token}`, // Send the token in the Cookie header.
       },
-      data: updatedBookingData, // Przekazujemy nowe dane rezerwacji jako body requestu.
+      data: updatedBookingData, // Pass the updated booking data as the request body.
     });
 
-    expect(updateResponse.status()).toBe(200); // Sprawdzamy, czy aktualizacja zakończyła się sukcesem.
+    expect(updateResponse.status()).toBe(200); // Check that the update succeeded.
 
-    const updatedBooking = await updateResponse.json(); // Odczytujemy odpowiedź po aktualizacji jako JSON.
+    const updatedBooking = await updateResponse.json(); // Parse the update response as JSON.
 
-    expect(updatedBooking.firstname).toBe(updatedBookingData.firstname); // Sprawdzamy, czy imię jest poprawne.
-    expect(updatedBooking.lastname).toBe(updatedBookingData.lastname); // Sprawdzamy, czy nazwisko zostało zaktualizowane.
-    expect(updatedBooking.totalprice).toBe(updatedBookingData.totalprice); // Sprawdzamy, czy cena została zaktualizowana.
-    expect(updatedBooking.depositpaid).toBe(updatedBookingData.depositpaid); // Sprawdzamy, czy informacja o zaliczce została zaktualizowana.
-    expect(updatedBooking.bookingdates.checkin).toBe(updatedBookingData.bookingdates.checkin); // Sprawdzamy nową datę zameldowania.
-    expect(updatedBooking.bookingdates.checkout).toBe(updatedBookingData.bookingdates.checkout); // Sprawdzamy nową datę wymeldowania.
-    expect(updatedBooking.additionalneeds).toBe(updatedBookingData.additionalneeds); // Sprawdzamy nową dodatkową potrzebę.
+    expect(updatedBooking.firstname).toBe(updatedBookingData.firstname); // Check that the firstname is correct.
+    expect(updatedBooking.lastname).toBe(updatedBookingData.lastname); // Check that the lastname was updated.
+    expect(updatedBooking.totalprice).toBe(updatedBookingData.totalprice); // Check that the price was updated.
+    expect(updatedBooking.depositpaid).toBe(updatedBookingData.depositpaid); // Check that the deposit information was updated.
+    expect(updatedBooking.bookingdates.checkin).toBe(updatedBookingData.bookingdates.checkin); // Check the new check-in date.
+    expect(updatedBooking.bookingdates.checkout).toBe(updatedBookingData.bookingdates.checkout); // Check the new check-out date.
+    expect(updatedBooking.additionalneeds).toBe(updatedBookingData.additionalneeds); // Check the new additional need.
   });
 
-  test('Zadanie 8: Usunięcie rezerwacji', async ({ request }) => { // Tworzymy test usuwający rezerwację.
-    const authResponse = await request.post(`${baseUrl}/auth`, { // Wysyłamy request POST po token autoryzacyjny.
-      data: { // Przekazujemy dane logowania.
-        username: 'admin', // Ustawiamy login użytkownika.
-        password: 'password123', // Ustawiamy hasło użytkownika.
+  test('Task 8: Delete a booking', async ({ request }) => { // Create a test that deletes a booking.
+    const authResponse = await request.post(`${baseUrl}/auth`, { // Send a POST request to get an auth token.
+      data: { // Pass login credentials.
+        username: 'admin', // Set the user login.
+        password: 'password123', // Set the user password.
       },
     });
 
-    expect(authResponse.status()).toBe(200); // Sprawdzamy, czy token został utworzony poprawnie.
+    expect(authResponse.status()).toBe(200); // Check that the token was created successfully.
 
-    const authBody = await authResponse.json(); // Odczytujemy odpowiedź z tokenem jako JSON.
+    const authBody = await authResponse.json(); // Parse the token response as JSON.
 
-    const token = authBody.token; // Zapisujemy token do zmiennej.
+    const token = authBody.token; // Store the token in a variable.
 
-    const newBooking = { // Przygotowujemy dane rezerwacji, którą później usuniemy.
-      firstname: 'Marta', // Ustawiamy imię klienta.
-      lastname: 'Usuwana', // Ustawiamy nazwisko klienta.
-      totalprice: 300, // Ustawiamy cenę rezerwacji.
-      depositpaid: true, // Ustawiamy informację, że zaliczka została opłacona.
-      bookingdates: { // Tworzymy obiekt z datami rezerwacji.
-        checkin: '2026-09-01', // Ustawiamy datę zameldowania.
-        checkout: '2026-09-03', // Ustawiamy datę wymeldowania.
+    const newBooking = { // Prepare data for a booking that will be deleted later.
+      firstname: 'Marta', // Set the customer first name.
+      lastname: 'Usuwana', // Set the customer last name.
+      totalprice: 300, // Set the booking price.
+      depositpaid: true, // Set the deposit paid information.
+      bookingdates: { // Create the booking dates object.
+        checkin: '2026-09-01', // Set the check-in date.
+        checkout: '2026-09-03', // Set the check-out date.
       },
-      additionalneeds: 'None', // Ustawiamy brak dodatkowych potrzeb.
+      additionalneeds: 'None', // Set no additional needs.
     };
 
-    const createResponse = await request.post(`${baseUrl}/booking`, { // Tworzymy nową rezerwację do usunięcia.
-      data: newBooking, // Przekazujemy dane rezerwacji jako body requestu.
+    const createResponse = await request.post(`${baseUrl}/booking`, { // Create a new booking to delete.
+      data: newBooking, // Pass the booking data as the request body.
     });
 
-    expect(createResponse.status()).toBe(200); // Sprawdzamy, czy rezerwacja została utworzona poprawnie.
+    expect(createResponse.status()).toBe(200); // Check that the booking was created successfully.
 
-    const createBody = await createResponse.json(); // Odczytujemy odpowiedź po utworzeniu rezerwacji.
+    const createBody = await createResponse.json(); // Parse the create booking response.
 
-    const bookingId = createBody.bookingid; // Zapisujemy ID utworzonej rezerwacji.
+    const bookingId = createBody.bookingid; // Store the ID of the created booking.
 
-    const deleteResponse = await request.delete(`${baseUrl}/booking/${bookingId}`, { // Wysyłamy request DELETE usuwający rezerwację.
-      headers: { // Przekazujemy nagłówki requestu.
-        Cookie: `token=${token}`, // Przekazujemy token w nagłówku Cookie.
+    const deleteResponse = await request.delete(`${baseUrl}/booking/${bookingId}`, { // Send a DELETE request to remove the booking.
+      headers: { // Pass the request headers.
+        Cookie: `token=${token}`, // Send the token in the Cookie header.
       },
     });
 
-    expect(deleteResponse.status()).toBe(201); // Sprawdzamy, czy usunięcie zakończyło się statusem 201.
+    expect(deleteResponse.status()).toBe(201); // Check that the delete returned status 201.
 
-    const getDeletedBookingResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Próbujemy pobrać usuniętą rezerwację.
+    const getDeletedBookingResponse = await request.get(`${baseUrl}/booking/${bookingId}`); // Attempt to fetch the deleted booking.
 
-    expect(getDeletedBookingResponse.status()).toBe(404); // Sprawdzamy, czy API zwraca 404, czyli rezerwacja nie istnieje.
+    expect(getDeletedBookingResponse.status()).toBe(404); // Check that the API returns 404, meaning the booking no longer exists.
   });
 });

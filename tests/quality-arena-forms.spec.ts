@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 
-test('wartosci wpisane do pol sa poprawne', async ({ page }) => {
+test('entered values in the fields are correct', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/forms');
 
   await page.getByTestId('input-name').click();
@@ -13,23 +13,23 @@ test('wartosci wpisane do pol sa poprawne', async ({ page }) => {
   await page.getByTestId('input-password').fill('admin');
 
   await page.getByTestId('input-search').click();
-  await page.getByTestId('input-search').fill('produkt');
+  await page.getByTestId('input-search').fill('product');
 
   await page.getByTestId('input-textarea').click();
-  await page.getByTestId('input-textarea').fill('to jest moja wiadomosc');
+  await page.getByTestId('input-textarea').fill('this is my message');
 
   await page.getByTestId('btn-form-submit').click();
 
   await expect(page.getByTestId('input-name')).toHaveValue('Jan Kowalski');
   await expect(page.getByTestId('input-email')).toHaveValue('test@test.pl');
   await expect(page.getByTestId('input-password')).toHaveValue('admin');
-  await expect(page.getByTestId('input-search')).toHaveValue('produkt');
-  await expect(page.getByTestId('input-textarea')).toHaveValue('to jest moja wiadomosc');
+  await expect(page.getByTestId('input-search')).toHaveValue('product');
+  await expect(page.getByTestId('input-textarea')).toHaveValue('this is my message');
   await expect(page).toHaveTitle(/Practice Forms/);
   
 });
 
-test('checkbox Selenium można zaznaczyć', async ({ page }) => {
+test('checkbox Selenium can be checked', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/forms');
 
   await expect(page.getByTestId('section-checkboxes')).toBeVisible();
@@ -49,7 +49,7 @@ test('checkbox Selenium można zaznaczyć', async ({ page }) => {
 
 });
 
-test('radio button pozwala wybrać tylko jedną opcję z grupy', async ({ page }) => {
+test('radio button allows selecting only one option from the group', async ({ page }) => {
      await page.goto('https://quality-arena-labs.base44.app/practice/forms');
 
     const juniorRadio = page.getByTestId('radio-junior-qa');

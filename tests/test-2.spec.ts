@@ -2,78 +2,78 @@ import { test, expect } from '@playwright/test';
 
 
 
-test('uzupelnienie i wyczyszczenie pol formularza Personal Information', async ({ page }) => {
+test('fill and clear Personal Information form fields', async ({ page }) => {
 
-  // Otwieramy stronę z formularzem Personal Information.
+  // Open the Personal Information form page.
   await page.goto('https://quality-arena-labs.base44.app/challenges/forms');
 
-  // Sprawdzamy, czy na stronie widoczna jest sekcja Personal Information.
+  // Check that the Personal Information section is visible.
   await expect(page.getByText('Personal Information')).toBeVisible();
 
-  // Wpisujemy imię i nazwisko do pola Full Name.
+  // Enter first and last name into the Full Name field.
   await page.getByTestId('ch-input-full-name').fill('Anna Kowalska');
 
-  // Wpisujemy adres email do pola Email Address.
+  // Enter email address into the Email Address field.
   await page.getByTestId('ch-input-email').fill('anna@example.com');
 
-  // Wpisujemy numer telefonu do pola Phone Number.
+  // Enter phone number into the Phone Number field.
   await page.getByTestId('ch-input-phone').fill('+48 123 456 789');
 
-  // Wpisujemy nazwę firmy do pola Current Company.
+  // Enter company name into the Current Company field.
   await page.getByTestId('ch-input-company').fill('Quality Island');
 
-  // Sprawdzamy, czy pole Full Name zawiera wpisaną wartość.
+  // Verify the Full Name field contains the entered value.
   await expect(
     page.getByTestId('ch-input-full-name')
   ).toHaveValue('Anna Kowalska');
 
-  // Sprawdzamy, czy pole Email Address zawiera wpisaną wartość.
+  // Verify the Email Address field contains the entered value.
   await expect(
     page.getByTestId('ch-input-email')
   ).toHaveValue('anna@example.com');
 
-  // Sprawdzamy, czy pole Phone Number zawiera wpisaną wartość.
+  // Verify the Phone Number field contains the entered value.
   await expect(
     page.getByTestId('ch-input-phone')
   ).toHaveValue('+48 123 456 789');
 
-  // Sprawdzamy, czy pole Current Company zawiera wpisaną wartość.
+  // Verify the Current Company field contains the entered value.
   await expect(
     page.getByTestId('ch-input-company')
   ).toHaveValue('Quality Island');
 
-  // Czyścimy pole Full Name.
+  // Clear the Full Name field.
   await page.getByTestId('ch-input-full-name').clear();
 
-  // Czyścimy pole Email Address.
+  // Clear the Email Address field.
   await page.getByTestId('ch-input-email').clear();
 
-  // Czyścimy pole Phone Number.
+  // Clear the Phone Number field.
   await page.getByTestId('ch-input-phone').clear();
 
-  // Czyścimy pole Current Company.
+  // Clear the Current Company field.
   await page.getByTestId('ch-input-company').clear();
 
-  // Sprawdzamy, czy pole Full Name jest puste.
+  // Verify the Full Name field is empty.
   await expect(
     page.getByTestId('ch-input-full-name')
   ).toHaveValue('');
 
-  // Sprawdzamy, czy pole Email Address jest puste.
+  // Verify the Email Address field is empty.
   await expect(
     page.getByTestId('ch-input-email')
   ).toHaveValue('');
 
-  // Sprawdzamy, czy pole Phone Number jest puste.
+  // Verify the Phone Number field is empty.
   await expect(
     page.getByTestId('ch-input-phone')
   ).toHaveValue('');
 
-  // Sprawdzamy, czy pole Current Company jest puste.
+  // Verify the Current Company field is empty.
   await expect(
     page.getByTestId('ch-input-company')
   ).toHaveValue('');
-  // jest szansa wyczyscic cala sekcje z all clear
+  // There is a chance to clear the whole section with all clear
 
 
 

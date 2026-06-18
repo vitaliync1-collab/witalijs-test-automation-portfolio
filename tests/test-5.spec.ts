@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 
-test('przycisk Submit Form jest widoczny i klikalny', async ({ page }) => {
+test('Submit Form button is visible and clickable', async ({ page }) => {
      await page.goto('https://quality-arena-labs.base44.app/practice/forms');
 
     const submitButton = page.getByTestId('btn-form-submit');

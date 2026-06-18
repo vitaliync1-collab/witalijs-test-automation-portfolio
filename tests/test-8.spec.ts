@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 
 
-test('po kliknięciu Success Toast pojawia się komunikat sukcesu', async ({ page }) => {
+test('Success Toast displayed after clicking the success button', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/interactions');
 
   await page.getByTestId('btn-toast-success').click();
@@ -11,7 +11,7 @@ test('po kliknięciu Success Toast pojawia się komunikat sukcesu', async ({ pag
 });
 
 
-test('po kliknięciu Error Toast pojawia się komunikat błędu', async ({ page }) => {
+test('Error Toast displayed after clicking the error button', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/interactions');
 
   await page.getByTestId('btn-toast-error').click();
@@ -20,7 +20,7 @@ test('po kliknięciu Error Toast pojawia się komunikat błędu', async ({ page 
 });
 
 
-test('po kliknięciu Info Toast pojawia się komunikat informacyjny', async ({ page }) => {
+test('Info Toast displayed after clicking the info button', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/interactions');
 
   await page.getByTestId('btn-toast-info').click();

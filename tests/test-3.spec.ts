@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 
 
-test('multi-select pozwala wybrać API Testing i UI Testing', async ({ page }) => {
+test('multi-select allows choosing API Testing and UI Testing', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/forms');
 
   const apiTestingOption = page.getByTestId('multi-select-api-testing');

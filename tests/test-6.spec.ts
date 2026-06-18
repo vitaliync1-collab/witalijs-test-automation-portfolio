@@ -14,7 +14,7 @@ import { test, expect } from '@playwright/test';
     
   //});
 
-test('tooltip pojawia się po najechaniu na przycisk', async ({ page }) => {
+test('tooltip appears after hovering over the button', async ({ page }) => {
   await page.goto('https://quality-arena-labs.base44.app/practice/interactions');
 
   const hoverButton = page.getByTestId('hover-reveal-trigger');
