@@ -44,16 +44,16 @@ The repository contains a Page Object Model implementation for the Quality Islan
 
 Covered flow:
 
-Open the shop application
-Log in with valid credentials
-Verify login with invalid credentials
-Validate the invalid login error message
-Verify product details
-Filter products by category
-Add a product to the cart
-Verify cart contents
-Complete the checkout process
-Verify order confirmation
+* Open the shop application
+* Log in with valid credentials
+* Verify login with invalid credentials
+* Validate the invalid login error message
+* Verify product details
+* Filter products by category
+* Add a product to the cart
+* Verify cart contents
+* Complete the checkout process
+* Verify order confirmation
 
 ## Running Tests
 
