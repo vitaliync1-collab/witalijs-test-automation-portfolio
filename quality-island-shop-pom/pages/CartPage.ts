@@ -17,4 +17,13 @@ export class CartPage {
   async proceedToCheckout() {
     await this.page.getByRole('button', { name: 'Proceed to Checkout' }).click();
   }
+
+  async removeProductFromCart() {
+    await this.page.getByTestId('btn-remove-cart-item-1').click();
+  }
+
+  async expectCartIsEmpty() {
+    await expect(this.page.getByText('Your cart is empty')).toBeVisible();
+  }
+
 }

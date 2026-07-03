@@ -20,7 +20,7 @@ export class LoginPage {
         await expect(this.page.getByText('Sign In to Shop')).toBeVisible();
     }
 
-    async expectLoginFaledMessageIsVisible() {
+    async expectLoginFailedMessageIsVisible() {
         await expect(this.page.getByText('Invalid email or password')).toBeVisible();
     }
 

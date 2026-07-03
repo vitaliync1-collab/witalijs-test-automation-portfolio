@@ -6,6 +6,6 @@ test('Verify login process with invalid credentials', async ({ page }) => {
     await loginPage.openLoginPage();
     await loginPage.fillLoginForm('invalid@example.com', 'invalidpassword');
     await loginPage.submitLoginForm();
-    await loginPage.expectLoginFaledMessageIsVisible();
+    await loginPage.expectLoginFailedMessageIsVisible();
     await loginPage.expectLoginPageIsVisible();
 });
